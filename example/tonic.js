@@ -1,5 +1,5 @@
-// Sample for tonic : https://tonicdev.com/npm/jsiojs
-var jsiojs = require("jsiojs");
+// Sample for tonic : https://tonicdev.com/npm/fileiojs
+var jsiojs = require("fileiojs");
 // Start of my wonderfull project
 jsiojs.createFile("wonderful.js")
       .then(function(){

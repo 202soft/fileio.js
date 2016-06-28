@@ -1,4 +1,4 @@
-var jsiojs = require("../lib/jsiojs_core")
+var fileiojs = require("../lib/fileiojs_core")
 var chai = require("chai")
 var chaiAsPromised = require("chai-as-promised")
 var fs = require("fs")
@@ -6,38 +6,40 @@ var fs = require("fs")
 chai.should();
 chai.use(chaiAsPromised);
 
-describe('jsiojs', () => {
+var manager = fileiojs.manager("javascript", "js", "// %s");
+
+describe('fileiojs', () => {
     
-    beforeEach(init);  
+    beforeEach(init); 
     
     afterEach(clean);
   
     describe('#createFile', () => 
         it('Should create a javascript file', () => 
-            jsiojs.createFile("hello.js").then(() => fs.existsSync("hello.js").should.be.true)
+            manager.createFile("hello.js").then(() => fs.existsSync("hello.js").should.be.true)
         )
     )
 
     describe('#createFile', () =>   
         it('Should fail when no filename',  () =>
-            jsiojs.createFile().should.be.rejectedWith("filename is missing")
+            manager.createFile().should.be.rejectedWith("filename is missing")
         )
     )
     
     describe('#createFile', () => 
         it('Should fail when not a javascript file', () =>
-            jsiojs.createFile("hello.txt").should.be.rejectedWith("'hello.txt' is not a valid javascript filename")
+            manager.createFile("hello.txt").should.be.rejectedWith("'hello.txt' is not a valid javascript filename")
         )
     )
     
     describe('#createFile', () =>   
         it('Should fail when file already exists', () =>
-            jsiojs.createFile("wonderfull.js").should.be.rejectedWith("'wonderfull.js' already exists")
+            manager.createFile("wonderfull.js").should.be.rejectedWith("'wonderfull.js' already exists")
         )
     )
 })
 
-describe('jsiojs', () => {
+describe('fileiojs', () => {
 
     beforeEach(init)  
     
@@ -45,31 +47,31 @@ describe('jsiojs', () => {
   
     describe('#deleteFile', () =>
         it('Should delete a javascript file', () =>
-            jsiojs.deleteFile('wonderfull.js').then(() => fs.existsSync('wonderfull.js').should.be.false)                
+            manager.deleteFile('wonderfull.js').then(() => fs.existsSync('wonderfull.js').should.be.false)                
         )
     )
     
     describe('#deleteFile', () => 
         it('Should fail when no filename', () =>
-            jsiojs.deleteFile().should.be.rejectedWith("filename is missing")
+            manager.deleteFile().should.be.rejectedWith("filename is missing")
         )
     )
     
     describe('#deleteFile', () =>  
         it('Should fail when not a javascript file', () =>
-            jsiojs.deleteFile("wonderfull.txt").should.be.rejectedWith("'wonderfull.txt' is not a valid javascript filename")
+            manager.deleteFile("wonderfull.txt").should.be.rejectedWith("'wonderfull.txt' is not a valid javascript filename")
         )
     )
     
     describe('#deleteFile', () => 
         it('Should fail when file does not exist', () =>
-            jsiojs.deleteFile("hello.js").should.be.rejectedWith("'hello.js' does not exist")
+            manager.deleteFile("hello.js").should.be.rejectedWith("'hello.js' does not exist")
         )
     )
 
 })
 
-describe('jsiojs', () => {
+describe('fileiojs', () => {
 
     beforeEach(init)  
     
@@ -78,7 +80,7 @@ describe('jsiojs', () => {
     describe('#renameFile', () =>
         it('Should rename a javascript file', () =>
             // When
-            jsiojs.renameFile("wonderfull.js","hello.js").then(() => {
+            manager.renameFile("wonderfull.js","hello.js").then(() => {
               // Then
               fs.existsSync("wonderfull.js").should.be.false
               fs.existsSync("hello.js").should.be.true
@@ -88,43 +90,43 @@ describe('jsiojs', () => {
     
     describe('#renameFile', () =>   
         it('Should fail when no filename', () =>
-            jsiojs.renameFile().should.be.rejectedWith("filename is missing")
+            manager.renameFile().should.be.rejectedWith("filename is missing")
         )
     )
     
     describe('#renameFile', () => 
         it('Should fail when only one filename', () => {
-            jsiojs.renameFile("wonderfull.js").should.be.rejectedWith("filename is missing")
+            manager.renameFile("wonderfull.js").should.be.rejectedWith("filename is missing")
         })
     )
     
     describe('#renameFile', () =>
         it('Should fail when oldname not a javascript file', () =>
-            jsiojs.renameFile("wonderfull.txt", "hello.js").should.be.rejectedWith("'wonderfull.txt' is not a valid javascript filename")                
+            manager.renameFile("wonderfull.txt", "hello.js").should.be.rejectedWith("'wonderfull.txt' is not a valid javascript filename")                
         )
     )
     
     describe('#renameFile', () =>
         it('Should fail when newname not a javascript file', () =>
-            jsiojs.renameFile("wonderfull.js", "hello.txt").should.be.rejectedWith("'hello.txt' is not a valid javascript filename")
+            manager.renameFile("wonderfull.js", "hello.txt").should.be.rejectedWith("'hello.txt' is not a valid javascript filename")
         )
     )    
     
     describe('#renameFile', () =>   
         it('Should fail when oldname does not exist', () =>
-            jsiojs.renameFile("hello.js", "wonderfull.js").should.be.rejectedWith("'hello.js' does not exist")
+            manager.renameFile("hello.js", "wonderfull.js").should.be.rejectedWith("'hello.js' does not exist")
         )
     )
     
     describe('#renameFile', () =>   
         it('Should fail when newname already exists', () =>
-            jsiojs.renameFile("wonderfull.js", "another.js").should.be.rejectedWith("'another.js' already exists")               
+            manager.renameFile("wonderfull.js", "another.js").should.be.rejectedWith("'another.js' already exists")               
         )
     )    
 
 })
 
-describe('jsiojs', () => {
+describe('fileiojs', () => {
 
     beforeEach(init)  
     
@@ -132,7 +134,7 @@ describe('jsiojs', () => {
   
     describe('#copyFile', () =>
         it('Should copy a javascript file', () =>
-            jsiojs.copyFile("wonderfull.js", "hello.js").then(() => {
+            manager.copyFile("wonderfull.js", "hello.js").then(() => {
               fs.existsSync("wonderfull.js").should.be.true
               fs.existsSync("hello.js").should.be.true
             })
@@ -141,43 +143,43 @@ describe('jsiojs', () => {
     
     describe('#copyFile', () =>  
         it('Should fail when no filename', () =>
-            jsiojs.copyFile().should.be.rejectedWith("filename is missing")
+            manager.copyFile().should.be.rejectedWith("filename is missing")
         )
     )
     
     describe('#copyFile', () =>  
         it('Should fail when only one filename', () =>
-            jsiojs.copyFile("wonderfull.js").should.be.rejectedWith("filename is missing")
+            manager.copyFile("wonderfull.js").should.be.rejectedWith("filename is missing")
         )
     )
     
     describe('#copyFile', () =>
         it('Should fail when source not a javascript file', () =>
-            jsiojs.copyFile("wonderfull.txt", "hello.js").should.be.rejectedWith("'wonderfull.txt' is not a valid javascript filename")
+            manager.copyFile("wonderfull.txt", "hello.js").should.be.rejectedWith("'wonderfull.txt' is not a valid javascript filename")
         )
     )
     
     describe('#copyFile', () =>  
         it('Should fail when destination not a javascript file', () =>
-            jsiojs.copyFile("wonderfull.js", "hello.txt").should.be.rejectedWith("'hello.txt' is not a valid javascript filename")
+            manager.copyFile("wonderfull.js", "hello.txt").should.be.rejectedWith("'hello.txt' is not a valid javascript filename")
         )
     )    
     
     describe('#copyFile', () =>   
         it('Should fail when source does not exist', () =>
-            jsiojs.copyFile("hello.js", "hi.js").should.be.rejectedWith("'hello.js' does not exist")
+            manager.copyFile("hello.js", "hi.js").should.be.rejectedWith("'hello.js' does not exist")
         )
     )
     
     describe('#copyFile', () =>
         it('Should fail when destination already exists', () =>
-            jsiojs.renameFile("wonderfull.js", "another.js").should.be.rejectedWith("'another.js' already exists")
+            manager.renameFile("wonderfull.js", "another.js").should.be.rejectedWith("'another.js' already exists")
         )
     )     
 
 })
 
-describe('jsiojs', () => {
+describe('fileiojs', () => {
 
     beforeEach(init)  
     
@@ -185,25 +187,25 @@ describe('jsiojs', () => {
   
     describe('#showFile', () =>
         it('Should show a javascript file', () =>
-            jsiojs.showFile("wonderfull.js").should.eventually.equal("//A simple js file")
+            manager.showFile("wonderfull.js").should.eventually.equal("//A simple js file")
         )
     )
 
     describe('#showFile', () =>  
         it('Should fail when no filename', () =>
-            jsiojs.showFile().should.be.rejectedWith("filename is missing")
+            manager.showFile().should.be.rejectedWith("filename is missing")
         )
     )
     
     describe('#showFile', () =>   
         it('Should fail when not a javascript file', () =>
-            jsiojs.showFile("wonderfull.txt").should.be.rejectedWith("'wonderfull.txt' is not a valid javascript filename")
+            manager.showFile("wonderfull.txt").should.be.rejectedWith("'wonderfull.txt' is not a valid javascript filename")
         )
     )
     
     describe('#showFile', () => 
         it('Should fail when file does not exist', () =>
-            jsiojs.showFile("hello.js").should.be.rejectedWith("'hello.js' does not exist")
+            manager.showFile("hello.js").should.be.rejectedWith("'hello.js' does not exist")
         )
     )
 })

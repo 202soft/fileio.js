@@ -1,17 +1,16 @@
 {
-  "name": "jsiojs",
+  "name": "fileiojs",
   "version": "42.0.0",
+  "author": "Nicolas François <nicolas.francois@outlook.com>",
+  "license": "Beerware",
   "description": "The most powerfull javascript file manager",
-  "main": "lib/jsiojs_core.js",
-  "bin": {
-    "jsiojs": "bin/jsio.js"
-  },
+  "main": "lib/fileiojs_core.js",
   "scripts": {
     "test": "mocha test/*_test.js"
   }, 
   "repository": {
     "type": "git",
-    "url": "https://github.com/nfrancois/jsio.js"
+    "url": "https://github.com/202soft/fileio.js"
   },
   "keywords": [
     "javascript",
@@ -20,21 +19,14 @@
     "js",
     "lol"
   ],
-  "author": "Nicolas François <nicolas.francois@outlook.com>",
-  "license": "Beerware",
   "bugs": {
-    "url": "https://github.com/nfrancois/jsio.js/issues"
+    "url": "https://github.com/202soft/fileio.js/issues"
   },
-  "homepage": "https://github.com/nfrancois/jsio.js",
-  "bin": {
-    "jsiojs": "./bin/jsio.js"
-  },
+  "homepage": "https://github.com/202soft/fileio.js",
   "engines": {
     "node": ">= 4.4.1"
   },
   "dependencies": {
-    "colors" : "~1.1.2",
-    "commander" : "~2.9.0",
     "q": "^1.0.1",
     "q-io": "~1.13.2 "
   },
