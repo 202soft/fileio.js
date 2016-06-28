@@ -6,7 +6,7 @@ var fs = require("fs")
 chai.should();
 chai.use(chaiAsPromised);
 
-var manager = fileiojs.manager("javascript", "js", "// %s");
+var manager = fileiojs.manager("javascript", "js", "TEST FILE");
 
 describe('fileiojs', () => {
     
